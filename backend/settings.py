@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS=['https://shopzon-z1es.onrender.com']
+CSRF_TRUSTED_ORIGINS=['https://shopzon-1vyp.onrender.com']
 
 
 # Application definition
