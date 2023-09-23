@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS=['https://shopzon-1vyp.onrender.com']
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
 
 # Application definition
 
