@@ -28,6 +28,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Get the absolute path of the root directory
+root_dir = os.path.abspath(os.path.join(script_dir, '..'))
+
+# Construct the absolute file path of .env
+env_file_path = os.path.join(root_dir, '.env')
+
+# Load environment variables from .env file
+load_dotenv(env_file_path)
+
+# Access environment variables
+DATABASE_NAME = os.getenv('DATABASE_NAME')
+USER = os.getenv('USER')
+DATABASE_PASS = os.getenv('DATABASE_PASS')
+
 CSRF_TRUSTED_ORIGINS=['https://shopzon-1vyp.onrender.com']
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
@@ -90,9 +106,9 @@ DATABASES = {
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'shopzon',
-    'USER': 'devloperadarsh167',
-    'PASSWORD': 'ApzW4G5DIMas',
+    'NAME': DATABASE_NAME,
+    'USER': USER,
+    'PASSWORD': DATABASE_PASS,
     'HOST': 'ep-summer-surf-761661.ap-southeast-1.aws.neon.tech',
     'PORT': '5432',
   }
