@@ -63,14 +63,20 @@ def register_view(request):
     return render(request, 'register.html', {'form': form})
 
 
-def store(request):
-    data = cartData(request)
 
+def store(request):
+    if 'random_products' not in request.session:
+        # If random products are not already stored in the session, fetch them
+        random_products = list(Product.objects.all().order_by('?')[:6])
+        request.session['random_products'] = random_products
+    else:
+        # If random products are already stored in the session, retrieve them
+        random_products = request.session['random_products']
+
+    data = cartData(request)
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
-
-    random_products = Product.objects.all().order_by('?')[:6]
 
     context = {'products': random_products, 'cartItems': cartItems}
     return render(request, 'store/store.html', context)
