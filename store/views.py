@@ -64,22 +64,28 @@ def register_view(request):
 
 
 
+from django.core import serializers
+
 def store(request):
     if 'random_products' not in request.session:
         # If random products are not already stored in the session, fetch them
         random_products = list(Product.objects.all().order_by('?')[:6])
-        request.session['random_products'] = random_products
+        # Convert Product objects to dictionaries
+        serialized_products = serializers.serialize('python', random_products)
+        random_products_data = [{'id': product['pk'], 'name': product['fields']['name'], 'price': product['fields']['price'], 'imageURL': product['fields']['imageURL']} for product in serialized_products]
+        request.session['random_products'] = random_products_data
     else:
         # If random products are already stored in the session, retrieve them
-        random_products = request.session['random_products']
+        random_products_data = request.session['random_products']
 
     data = cartData(request)
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
 
-    context = {'products': random_products, 'cartItems': cartItems}
+    context = {'products': random_products_data, 'cartItems': cartItems}
     return render(request, 'store/store.html', context)
+
 
 
 
